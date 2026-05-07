@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serenità Estética | Clínica de Alta Performance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #FAF6EF;
+    --espresso: #16100A;
+    --gold: #C9A96E;
+    --gold-light: #E8D5B0;
+    --muted: #7A6A58;
+    --warm-dark: #201810;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--espresso);
+    color: var(--cream);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CURSOR */
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transition: transform 0.15s ease;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,169,110,0.5);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transition: transform 0.35s ease, width 0.3s, height 0.3s;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+    padding: 28px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(22,16,10,0.95), transparent);
+    backdrop-filter: blur(0px);
+    transition: all 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(22,16,10,0.97);
+    backdrop-filter: blur(12px);
+    padding: 18px 60px;
+    border-bottom: 1px solid rgba(201,169,110,0.15);
+  }
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 300; letter-spacing: 4px;
+    color: var(--cream); text-decoration: none; text-transform: uppercase;
+  }
+  .logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    color: rgba(250,246,239,0.65); text-decoration: none;
+    font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: transparent; border: 1px solid var(--gold);
+    color: var(--gold); padding: 10px 28px; font-size: 11px;
+    letter-spacing: 2px; text-transform: uppercase; cursor: none;
+    transition: all 0.3s; font-family: 'DM Sans', sans-serif;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--espresso); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 140px 80px 100px 80px;
+    position: relative; z-index: 2;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 36px;
+  }
+  .hero-tag::before {
+    content: ''; width: 40px; height: 1px; background: var(--gold);
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 6vw, 86px);
+    font-weight: 300; line-height: 1.05;
+    color: var(--cream); margin-bottom: 28px;
+  }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-desc {
+    font-size: 15px; line-height: 1.8; color: var(--muted);
+    max-width: 400px; margin-bottom: 52px; font-weight: 300;
+  }
+  .hero-actions { display: flex; align-items: center; gap: 36px; }
+  .btn-primary {
+    background: var(--gold); color: var(--espresso);
+    padding: 16px 40px; font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; border: none; cursor: none;
+    font-family: 'DM Sans', sans-serif; font-weight: 500;
+    transition: all 0.3s; text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-ghost {
+    color: var(--cream); font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+    transition: color 0.3s;
+  }
+  .btn-ghost:hover { color: var(--gold); }
+  .btn-ghost::after { content: '→'; transition: transform 0.3s; }
+  .btn-ghost:hover::after { transform: translateX(4px); }
+
+  .hero-stats {
+    display: flex; gap: 48px; margin-top: 72px;
+    padding-top: 40px; border-top: 1px solid rgba(201,169,110,0.2);
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px; font-weight: 300; color: var(--gold); line-height: 1;
+  }
+  .stat-label { font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 4px; }
+
+  .hero-right {
+    position: relative; overflow: hidden;
+  }
+  .hero-image {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #2a1f14 0%, #3d2b1a 40%, #1a1208 100%);
+    position: relative;
+  }
+  .hero-image::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A96E' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-image-inner {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
+  }
+  .image-placeholder-circle {
+    width: 280px; height: 380px;
+    border: 1px solid rgba(201,169,110,0.3);
+    border-radius: 200px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .image-placeholder-circle::before {
+    content: '';
+    position: absolute; inset: 12px;
+    border: 1px solid rgba(201,169,110,0.15);
+    border-radius: 200px;
+  }
+  .image-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px; letter-spacing: 3px; color: rgba(201,169,110,0.5);
+    text-align: center; text-transform: uppercase;
+  }
+  .floating-badge {
+    position: absolute; bottom: 80px; left: -30px;
+    background: var(--warm-dark); border: 1px solid rgba(201,169,110,0.25);
+    padding: 20px 28px; z-index: 3;
+  }
+  .badge-text { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: var(--gold); font-style: italic; }
+  .badge-sub { font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 4px; }
+
+  .hero-line {
+    position: absolute; left: -1px; top: 20%; bottom: 20%;
+    width: 1px; background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    z-index: 2;
+  }
+
+  /* SECTION BASE */
+  section { padding: 120px 80px; }
+
+  .section-tag {
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  }
+  .section-tag::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 4vw, 58px); font-weight: 300; line-height: 1.1;
+    color: var(--cream);
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  /* SERVICES */
+  .services { background: var(--warm-dark); }
+  .services-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 72px;
+  }
+  .services-desc {
+    max-width: 340px; font-size: 14px; line-height: 1.8;
+    color: var(--muted); font-weight: 300;
+  }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: rgba(201,169,110,0.15);
+  }
+  .service-card {
+    background: var(--warm-dark); padding: 52px 40px;
+    position: relative; overflow: hidden;
+    transition: background 0.4s;
+  }
+  .service-card:hover { background: rgba(201,169,110,0.05); }
+  .service-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1px; background: var(--gold);
+    transition: width 0.5s ease;
+  }
+  .service-card:hover::after { width: 100%; }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px; font-weight: 300; color: rgba(201,169,110,0.15);
+    line-height: 1; margin-bottom: 28px;
+  }
+  .service-icon { font-size: 28px; margin-bottom: 20px; }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 400; color: var(--cream); margin-bottom: 14px;
+  }
+  .service-desc { font-size: 13px; line-height: 1.8; color: var(--muted); font-weight: 300; }
+  .service-link {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 28px;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); text-decoration: none; transition: gap 0.3s;
+  }
+  .service-link:hover { gap: 14px; }
+
+  /* ABOUT */
+  .about {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center;
+    background: var(--espresso);
+  }
+  .about-visual {
+    position: relative;
+  }
+  .about-img-box {
+    width: 100%; padding-bottom: 130%;
+    background: linear-gradient(160deg, #2d2018 0%, #1a1208 100%);
+    position: relative; overflow: hidden;
+  }
+  .about-img-box::before {
+    content: 'SERENITÀ';
+    position: absolute; bottom: 30px; right: 30px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px; letter-spacing: 6px; color: rgba(201,169,110,0.3);
+    text-transform: uppercase; writing-mode: vertical-rl;
+  }
+  .about-accent {
+    position: absolute; top: -20px; right: -20px;
+    width: 120px; height: 120px;
+    border: 1px solid rgba(201,169,110,0.3);
+    border-radius: 50%;
+  }
+  .about-accent-2 {
+    position: absolute; bottom: 40px; left: -30px;
+    background: var(--warm-dark); border: 1px solid rgba(201,169,110,0.2);
+    padding: 24px 32px;
+  }
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-style: italic; color: var(--gold); line-height: 1.4;
+  }
+  .about-content { padding-right: 20px; }
+  .about-text { font-size: 15px; line-height: 1.9; color: var(--muted); margin: 28px 0 40px; font-weight: 300; }
+  .about-features { display: flex; flex-direction: column; gap: 16px; }
+  .feature-item {
+    display: flex; align-items: center; gap: 16px;
+    font-size: 13px; color: rgba(250,246,239,0.7); letter-spacing: 0.5px;
+  }
+  .feature-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+
+  /* RESULTS */
+  .results {
+    background: var(--gold);
+    padding: 80px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  }
+  .result-item {
+    padding: 48px 40px;
+    border-right: 1px solid rgba(22,16,10,0.15);
+  }
+  .result-item:last-child { border-right: none; }
+  .result-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 60px; font-weight: 300; color: var(--espresso); line-height: 1;
+  }
+  .result-label { font-size: 12px; letter-spacing: 1.5px; color: rgba(22,16,10,0.6); margin-top: 8px; }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--warm-dark); }
+  .testimonials-header { margin-bottom: 64px; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .testimonial-card {
+    background: var(--espresso); padding: 48px 36px;
+    border: 1px solid rgba(201,169,110,0.1);
+    position: relative; transition: border-color 0.3s;
+  }
+  .testimonial-card:hover { border-color: rgba(201,169,110,0.35); }
+  .testimonial-card::before {
+    content: '"';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px; color: rgba(201,169,110,0.15);
+    position: absolute; top: 20px; left: 28px; line-height: 1;
+  }
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px; line-height: 1.7; color: var(--cream);
+    font-style: italic; margin-bottom: 32px; position: relative; z-index: 1;
+  }
+  .testimonial-author { display: flex; align-items: center; gap: 14px; }
+  .author-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, #3d2b1a, #2a1f14);
+    border: 1px solid rgba(201,169,110,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold);
+  }
+  .author-name { font-size: 13px; color: var(--cream); font-weight: 500; }
+  .author-proc { font-size: 11px; color: var(--muted); letter-spacing: 1px; margin-top: 2px; }
+  .stars { color: var(--gold); font-size: 12px; margin-bottom: 20px; }
+
+  /* CTA */
+  .cta-section {
+    background: var(--espresso);
+    padding: 140px 80px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(201,169,110,0.07) 0%, transparent 70%);
+  }
+  .cta-section .section-tag { justify-content: center; }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 5vw, 72px); font-weight: 300;
+    color: var(--cream); line-height: 1.1; margin: 20px 0 28px;
+    position: relative;
+  }
+  .cta-title em { font-style: italic; color: var(--gold); }
+  .cta-desc { font-size: 15px; color: var(--muted); max-width: 480px; margin: 0 auto 52px; line-height: 1.8; font-weight: 300; }
+  .cta-buttons { display: flex; align-items: center; justify-content: center; gap: 32px; }
+  .cta-line {
+    position: absolute; top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px; height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--gold));
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--warm-dark);
+    border-top: 1px solid rgba(201,169,110,0.15);
+    padding: 60px 80px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; letter-spacing: 4px; color: var(--cream); text-transform: uppercase;
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-links { display: flex; gap: 32px; }
+  .footer-links a { font-size: 11px; letter-spacing: 2px; color: var(--muted); text-decoration: none; text-transform: uppercase; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 11px; color: rgba(122,106,88,0.5); letter-spacing: 1px; }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up:nth-child(2) { transition-delay: 0.1s; }
+  .fade-up:nth-child(3) { transition-delay: 0.2s; }
+  .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 20px 30px; }
+    nav.scrolled { padding: 14px 30px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 120px 30px 80px; }
+    section { padding: 80px 30px; }
+    .services-header { flex-direction: column; gap: 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .about { grid-template-columns: 1fr; gap: 48px; }
+    .results { grid-template-columns: repeat(2, 1fr); padding: 60px 30px; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 28px; text-align: center; padding: 40px 30px; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="logo">Seren<span>ità</span></a>
+  <ul class="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#resultados">Resultados</a></li>
+    <li><a href="#depoimentos">Depoimentos</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Agendar Consulta</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Clínica de Estética Premium</div>
+    <h1 class="hero-title">
+      Beleza que<br>
+      <em>transforma,</em><br>
+      resultados que<br>
+      duram.
+    </h1>
+    <p class="hero-desc">
+      Procedimentos estéticos de alta performance com tecnologia de ponta e protocolos personalizados para cada paciente.
+    </p>
+    <div class="hero-actions">
+      <a href="#cta" class="btn-primary">Agendar Avaliação</a>
+      <a href="#servicos" class="btn-ghost">Ver Tratamentos</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Anos de experiência</div>
+      </div>
+      <div>
+        <div class="stat-num">4.8k</div>
+        <div class="stat-label">Pacientes atendidos</div>
+      </div>
+      <div>
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Satisfação</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-image">
+      <div class="hero-image-inner">
+        <div class="image-placeholder-circle">
+          <div class="image-label">Foto da<br>Clínica</div>
+        </div>
+      </div>
+    </div>
+    <div class="floating-badge">
+      <div class="badge-text">"Confiança começa<br>pelo cuidado."</div>
+      <div class="badge-sub">— Dra. Sofia Carvalho</div>
+    </div>
+    <div class="hero-line"></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="servicos">
+  <div class="services-header">
+    <div>
+      <div class="section-tag">Tratamentos</div>
+      <h2 class="section-title">O que <em>oferecemos</em></h2>
+    </div>
+    <p class="services-desc">
+      Cada procedimento é desenvolvido com base em protocolos internacionais e adaptado à sua necessidade.
+    </p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <div class="service-num">01</div>
+      <div class="service-icon">✦</div>
+      <div class="service-name">Harmonização Facial</div>
+      <p class="service-desc">Procedimentos minimamente invasivos para restaurar o equilíbrio e a juventude natural dos traços faciais.</p>
+      <a href="#" class="service-link">Saiba mais →</a>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-num">02</div>
+      <div class="service-icon">◈</div>
+      <div class="service-name">Bioestimuladores</div>
+      <p class="service-desc">Estimulação natural do colágeno para resultados progressivos e duradouros com aparência completamente natural.</p>
+      <a href="#" class="service-link">Saiba mais →</a>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-num">03</div>
+      <div class="service-icon">◇</div>
+      <div class="service-name">Tratamentos Corporais</div>
+      <p class="service-desc">Protocolos avançados de remodelação corporal com tecnologia de última geração para resultados visíveis.</p>
+      <a href="#" class="service-link">Saiba mais →</a>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-num">04</div>
+      <div class="service-icon">⬡</div>
+      <div class="service-name">Skincare Clínico</div>
+      <p class="service-desc">Protocolos de skincare personalizados com ativos dermocosméticos de alta concentração e eficácia comprovada.</p>
+      <a href="#" class="service-link">Saiba mais →</a>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-num">05</div>
+      <div class="service-icon">⬟</div>
+      <div class="service-name">Laser & Tecnologia</div>
+      <p class="service-desc">Equipamentos de última geração para tratamento de manchas, rejuvenescimento e remoção de pelos com precisão.</p>
+      <a href="#" class="service-link">Saiba mais →</a>
+    </div>
+    <div class="service-card fade-up">
+      <div class="service-num">06</div>
+      <div class="service-icon">✧</div>
+      <div class="service-name">Avaliação Premium</div>
+      <p class="service-desc">Consulta completa com protocolo personalizado desenvolvido exclusivamente para o seu perfil e objetivos.</p>
+      <a href="#" class="service-link">Saiba mais →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="sobre">
+  <div class="about-visual">
+    <div class="about-img-box"></div>
+    <div class="about-accent"></div>
+    <div class="about-accent-2">
+      <div class="about-quote">"Cada rosto conta<br>uma história única."</div>
+    </div>
+  </div>
+  <div class="about-content">
+    <div class="section-tag">Sobre a Clínica</div>
+    <h2 class="section-title">Referência em <em>estética</em><br>de alta performance</h2>
+    <p class="about-text">
+      A Serenità nasceu da visão de que estética e bem-estar caminham juntos. Com uma equipe multidisciplinar formada pelas melhores escolas do Brasil e Europa, entregamos resultados que respeitam a identidade de cada paciente.
+    </p>
+    <div class="about-features">
+      <div class="feature-item"><div class="feature-dot"></div>Equipe com especialização internacional</div>
+      <div class="feature-item"><div class="feature-dot"></div>Equipamentos certificados pela ANVISA</div>
+      <div class="feature-item"><div class="feature-dot"></div>Ambiente premium com total privacidade</div>
+      <div class="feature-item"><div class="feature-dot"></div>Protocolos personalizados para cada paciente</div>
+      <div class="feature-item"><div class="feature-dot"></div>Acompanhamento pós-procedimento incluído</div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<div class="results" id="resultados">
+  <div class="result-item fade-up">
+    <div class="result-num">4.800+</div>
+    <div class="result-label">Pacientes transformados</div>
+  </div>
+  <div class="result-item fade-up">
+    <div class="result-num">12</div>
+    <div class="result-label">Anos de experiência</div>
+  </div>
+  <div class="result-item fade-up">
+    <div class="result-num">98%</div>
+    <div class="result-label">Taxa de satisfação</div>
+  </div>
+  <div class="result-item fade-up">
+    <div class="result-num">15+</div>
+    <div class="result-label">Especialistas na equipe</div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="depoimentos">
+  <div class="testimonials-header">
+    <div class="section-tag">Depoimentos</div>
+    <h2 class="section-title">O que dizem<br>nossas <em>pacientes</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card fade-up">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">A diferença foi absurda. Vim com o rosto cansado e saí com a versão mais bonita de mim. A Dra. Sofia entendeu exatamente o que eu queria sem exageros.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">A</div>
+        <div>
+          <div class="author-name">Ana Paula M.</div>
+          <div class="author-proc">Harmonização Facial</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card fade-up">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Já fui em outras clínicas antes, mas a Serenità é outro nível. O atendimento, o ambiente, o resultado — tudo perfeito. Me sinto em casa toda vez que venho.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">C</div>
+        <div>
+          <div class="author-name">Camila R.</div>
+          <div class="author-proc">Bioestimulador + Skincare</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card fade-up">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Resultado natural, sem aquela cara de feito. As pessoas perguntam se eu estou descansada ou se mudei o cabelo — nunca percebem o procedimento. É exatamente isso que eu queria.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">M</div>
+        <div>
+          <div class="author-name">Mariana S.</div>
+          <div class="author-proc">Tratamento Corporal</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-line"></div>
+  <div class="section-tag">Comece hoje</div>
+  <h2 class="cta-title">Sua melhor versão<br><em>começa aqui.</em></h2>
+  <p class="cta-desc">Agende sua avaliação gratuita e descubra o protocolo ideal para os seus objetivos.</p>
+  <div class="cta-buttons">
+    <a href="https://wa.me/5511999999999" class="btn-primary">Agendar via WhatsApp</a>
+    <a href="tel:+5511999999999" class="btn-ghost">Ligar agora</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Seren<span>ità</span> Estética</div>
+  <div class="footer-links">
+    <a href="#">Serviços</a>
+    <a href="#">Sobre</a>
+    <a href="#">Contato</a>
+    <a href="#">Instagram</a>
+  </div>
+  <div class="footer-copy">© 2025 Serenità Estética. Todos os direitos reservados.</div>
+</footer>
+
+<script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animCursor() {
+    cursor.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) *.12;
+    ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { ring.style.width = '56px'; ring.style.height = '56px'; ring.style.marginLeft = '-10px'; ring.style.marginTop = '-10px'; });
+    el.addEventListener('mouseleave', () => { ring.style.width = '36px'; ring.style.height = '36px'; ring.style.marginLeft = '0'; ring.style.marginTop = '0'; });
+  });
+
+  // NAV SCROLL
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // FADE IN
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
