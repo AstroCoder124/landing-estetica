@@ -3,8 +3,7 @@
 Site institucional e de conversão para clínica de estética de alto padrão.
 
 ## 🔗 Demo ao vivo
-[Ver projeto](LINK_DO_VERCEL_AQUI)
-
+https://landing-estetica-nine.vercel.app/
 ## ✦ Destaques
 - Design luxury dark com paleta espresso e dourado
 - Cursor customizado com animação suave
